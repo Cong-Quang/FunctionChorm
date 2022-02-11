@@ -7,8 +7,6 @@ namespace FunctionChorm
     public class SystemChrom
     {
         IWebDriver driver;
-
-
         ////////    Open Chrom /////
         public void OpenChrom()
         {
@@ -51,7 +49,6 @@ namespace FunctionChorm
             }
         }
         ///     Function    ///
-        ///     
         /*  Auto keyDown    */
         public void auto_slip(int stop)
         {
@@ -76,7 +73,6 @@ namespace FunctionChorm
                 .Build()
                 .Perform();
         }
-
         /*  Like   */
         public void Like(int Stop)
         {
