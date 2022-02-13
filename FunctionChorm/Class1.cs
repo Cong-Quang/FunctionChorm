@@ -7,8 +7,7 @@ namespace FunctionChorm
     public class SystemChrom
     {
         IWebDriver driver;
-        ////////    Open Chrom /////
-        public void OpenChrom()
+        public void OpenChrome()
         {
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
@@ -16,7 +15,7 @@ namespace FunctionChorm
             op.AddArguments("--disable-notifications");
             driver = new ChromeDriver(driverService, op);
         }
-        public void OpenChrom(int sizeX,int sizeY)
+        public void OpenChrome(int sizeX,int sizeY)
         {
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
@@ -25,7 +24,7 @@ namespace FunctionChorm
             driver = new ChromeDriver(driverService, op);
             driver.Manage().Window.Size = new Size(sizeX, sizeY);
         }
-        public void OpenChrom(int sizeX, int sizeY,int positionX,int positionY)
+        public void OpenChrome(int sizeX, int sizeY,int positionX,int positionY)
         {
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
@@ -35,21 +34,13 @@ namespace FunctionChorm
             driver.Manage().Window.Size = new Size(sizeX, sizeY);
             driver.Manage().Window.Position = new Point(positionX, positionY);
         }
-        ////////    Login   ///////
         public void login(string usename, string password)
         {
-            try
-            {
-                driver.Navigate().GoToUrl("https://www.facebook.com/");
-                driver.FindElement(By.Id("email")).SendKeys(usename);
-                driver.FindElement(By.Id("pass")).SendKeys(password + Keys.Return);
-            }
-            catch (Exception)
-            {
-            }
+            driver.Navigate().GoToUrl("https://www.facebook.com/");
+            driver.FindElement(By.Id("email")).SendKeys(usename);
+            driver.FindElement(By.Id("pass")).SendKeys(password + Keys.Return);
         }
         ///     Function    ///
-        /*  Auto keyDown    */
         public void auto_slip(int stop)
         {
             Actions actions = new Actions(driver);
@@ -73,7 +64,6 @@ namespace FunctionChorm
                 .Build()
                 .Perform();
         }
-        /*  Like   */
         public void Like(int Stop)
         {
             var button = driver.FindElement(By.XPath("//div[@aria-label='Thích']"));
@@ -97,27 +87,41 @@ namespace FunctionChorm
         public void Like()
         {
             Actions actions = new Actions(driver);
-            IWebElement button = driver.FindElement(By.XPath("//div[@aria-label='Thích']"));
-            if (button != null)
+            try
             {
-                try
-                {
-                    actions.MoveToElement(button).Perform();
-                    button.Click();
-                }
-                catch (Exception)
-                {
-                    Like();
-                }
+                IWebElement button = driver.FindElement(By.XPath("//div[@aria-label='Thích']"));
+                actions.MoveToElement(button).Perform();
+                button.Click();
+            }
+            catch (Exception)
+            {
+                Like();
             }
         }
-        /*  Link  */
+        public void Love()
+        {
+            Actions actions = new Actions(driver);
+            try
+            {
+                IWebElement buttonLike = driver.FindElement(By.XPath("//div[@aria-label='Thích']"));
+                actions
+                     .MoveToElement(buttonLike)
+                     .Perform();
+                Thread.Sleep(100);
+                IWebElement buttonLove = driver.FindElement(By.XPath("//div[@aria-label='Yêu thích']"));
+                buttonLove.Click();
+                Love();
+            }
+            catch (Exception)
+            {
+                Love();
+            }
+        }
         public void openLink(string link)
         {
             Thread.Sleep(TimeSpan.FromSeconds(1));
             driver.Navigate().GoToUrl(link);
         }
-        /*  Sleep */
         public void SleepRandom()
         {
             Random rnd = new Random();
@@ -142,13 +146,6 @@ namespace FunctionChorm
             }
             Thread.Sleep(trd1);
         }
-        /* key esc  */
-        public void KeyESC()
-        {
-            Actions actions = new Actions(driver);
-            actions.SendKeys(Keys.Escape);
-        }
-        /*  Close   */
         public void CloseChrom(bool QuitCH)
         {
             if (QuitCH == false)
@@ -163,6 +160,13 @@ namespace FunctionChorm
         public void CloseChrom()
         {
             driver.Close();
+        }
+
+
+        private void goToPoin(IWebElement button)
+        {
+            IJavaScriptExecutor je = (IJavaScriptExecutor)driver;
+            je.ExecuteScript("arguments[0].scrollIntoView(true);", button);
         }
     }
 }
