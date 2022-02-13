@@ -4,7 +4,7 @@ using OpenQA.Selenium.Interactions;
 using System.Drawing;
 namespace FunctionChorm
 {
-    public class SystemChrom
+    public class FunctionChorm
     {
         IWebDriver driver;
         public void OpenChrome()
