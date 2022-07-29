@@ -7,33 +7,21 @@ namespace NCQ
 {
     public class FChrom
     {
-        IWebDriver driver;
-
+         public static IWebDriver driver;
+        public static ChromeDriverService driverService = ChromeDriverService.CreateDefaultService();
+        public static ChromeOptions op = new ChromeOptions();
         public void OpenChrome()
         {
-            var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
-            ChromeOptions op = new ChromeOptions();
             op.AddArguments("--disable-notifications");
             driver = new ChromeDriver(driverService, op);
         }
-        public void OpenChrome(int sizeX, int sizeY)
+        public void SetSize(int sizeX, int sizeY)
         {
-            var driverService = ChromeDriverService.CreateDefaultService();
-            driverService.HideCommandPromptWindow = true;
-            ChromeOptions op = new ChromeOptions();
-            op.AddArguments("--disable-notifications");
-            driver = new ChromeDriver(driverService, op);
             driver.Manage().Window.Size = new Size(sizeX, sizeY);
         }
-        public void OpenChrome(int sizeX, int sizeY, int positionX, int positionY)
+        public void Position(int positionX, int positionY)
         {
-            var driverService = ChromeDriverService.CreateDefaultService();
-            driverService.HideCommandPromptWindow = true;
-            ChromeOptions op = new ChromeOptions();
-            op.AddArguments("--disable-notifications");
-            driver = new ChromeDriver(driverService, op);
-            driver.Manage().Window.Size = new Size(sizeX, sizeY);
             driver.Manage().Window.Position = new Point(positionX, positionY);
         }
         public void CloseChrom()
